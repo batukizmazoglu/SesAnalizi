@@ -7,9 +7,9 @@ class StyledButton(QPushButton):
         self.setStyleSheet(f"""
             QPushButton {{
                 background-color: {color};
-                color: white;
+                color: black;
                 border: none;
-                border-radius: 4px;
+                border-radius: 5px;
                 padding: 8px 16px;
                 font-weight: bold;
             }}
