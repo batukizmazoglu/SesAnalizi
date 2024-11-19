@@ -9,7 +9,7 @@ from tabs.speech_tab import SpeechTab
 from tabs.topic_tab import TopicTab
 from utils.styles import COLORS
 from tabs.histogram_tab import RecordingTab
-from tabs.speaker_tab import SpeakerTab
+from tabs.speaker_recognition_tab import SpeakerRecognitionTab
 #from tabs.speech_tab import SpeechTab
 #from tabs.emotion_tab import EmotionTab
 #from tabs.topic_tab import TopicTab
@@ -64,7 +64,7 @@ class VoiceAnalysisApp(QMainWindow):
 
         # Tüm tabları ekleme
         tabs.addTab(RecordingTab(), "🎤 Ses Kaydı ve Histogram")
-        tabs.addTab(SpeakerTab(), "👤 Konuşmacı Tanıma")
+        tabs.addTab(SpeakerRecognitionTab(), "👤 Konuşmacı Tanıma")
         tabs.addTab(SpeechTab(), "💭 Konuşma Analizi")
         tabs.addTab(EmotionTab(), "😊 Duygu Analizi")
         tabs.addTab(TopicTab(), "📋 Konu Analizi")
