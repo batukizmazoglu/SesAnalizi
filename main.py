@@ -9,10 +9,7 @@ from tabs.speech_tab import SpeechTab
 from tabs.topic_tab import TopicTab
 from utils.styles import COLORS
 from tabs.histogram_tab import RecordingTab
-from tabs.speaker_tab import SpeakerTab
-#from tabs.speech_tab import SpeechTab
-#from tabs.emotion_tab import EmotionTab
-#from tabs.topic_tab import TopicTab
+from tabs.speaker_recognition_tab import SpeakerRecognitionTab
 
 class VoiceAnalysisApp(QMainWindow):
     def __init__(self):
@@ -54,17 +51,18 @@ class VoiceAnalysisApp(QMainWindow):
                 margin-right: 2px;
                 border-top-left-radius: 4px;
                 border-top-right-radius: 4px;
+                color: black; /* Yazı rengini siyah yap */
             }}
             QTabBar::tab:selected {{
                 background: {COLORS['primary']};
-                color: white;
+                color: white; /* Seçili sekmenin yazı rengini beyaz yap */
             }}
         """)
         layout.addWidget(tabs)
 
         # Tüm tabları ekleme
         tabs.addTab(RecordingTab(), "🎤 Ses Kaydı ve Histogram")
-        tabs.addTab(SpeakerTab(), "👤 Konuşmacı Tanıma")
+        tabs.addTab(SpeakerRecognitionTab(), "👤 Konuşmacı Tanıma")
         tabs.addTab(SpeechTab(), "💭 Konuşma Analizi")
         tabs.addTab(EmotionTab(), "😊 Duygu Analizi")
         tabs.addTab(TopicTab(), "📋 Konu Analizi")
