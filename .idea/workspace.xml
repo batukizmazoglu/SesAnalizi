@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f8d2265-e5fe-440c-9622-3278bd4c5aeb" name="Changes" comment="Commit">
-      <change beforePath="$PROJECT_DIR$/.idea/SesAnalizi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SesAnalizi.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tabs/SpeechWordCounter_ENES.py" beforeDir="false" afterPath="$PROJECT_DIR$/tabs/SpeechWordCounter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tabs/speech_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/tabs/speech_tab.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,12 +39,12 @@
     &quot;author&quot;: &quot;EnesKaydi&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/batukizmazoglu/SesAnalizi.git",
-    "accountId": "afc3c75c-3762-4f6c-a855-3b0852b38443"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/batukizmazoglu/SesAnalizi.git&quot;,
+    &quot;accountId&quot;: &quot;afc3c75c-3762-4f6c-a855-3b0852b38443&quot;
   }
-}]]></component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -59,34 +54,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.SpeechWordCounter_ENES.executor": "Run",
-    "Python.Template.executor": "Run",
-    "Python.components.executor": "Run",
-    "Python.data_processing.executor": "Run",
-    "Python.histogram.executor": "Run",
-    "Python.histogram_tab.executor": "Run",
-    "Python.main.executor": "Run",
-    "Python.main2.executor": "Debug",
-    "Python.speaker_recognition_tab.executor": "Run",
-    "Python.speaker_tab.executor": "Run",
-    "Python.speech_tab.executor": "Run",
-    "Python.styles.executor": "Run",
-    "Python.topic_tab.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.SpeechWordCounter_ENES.executor&quot;: &quot;Run&quot;,
+    &quot;Python.Template.executor&quot;: &quot;Run&quot;,
+    &quot;Python.components.executor&quot;: &quot;Run&quot;,
+    &quot;Python.data_processing.executor&quot;: &quot;Run&quot;,
+    &quot;Python.histogram.executor&quot;: &quot;Run&quot;,
+    &quot;Python.histogram_tab.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.main2.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.speaker_recognition_tab.executor&quot;: &quot;Run&quot;,
+    &quot;Python.speaker_tab.executor&quot;: &quot;Run&quot;,
+    &quot;Python.speech_tab.executor&quot;: &quot;Run&quot;,
+    &quot;Python.styles.executor&quot;: &quot;Run&quot;,
+    &quot;Python.topic_tab.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\user\PycharmProjects\SesAnalizi" />
