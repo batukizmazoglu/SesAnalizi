@@ -117,3 +117,4 @@ if __name__ == '__main__':
     main_window.setWindowTitle("Duygu Analizi Uygulaması")
     main_window.show()
     app.exec_()
+# deneme
