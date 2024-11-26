@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9f8d2265-e5fe-440c-9622-3278bd4c5aeb" name="Changes" comment="Commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tabs/speaker_recognition_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/tabs/speaker_recognition_tab.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,22 +28,22 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "history": [
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;history&quot;: [
     {
-      "assignee": "batukizmazoglu",
-      "author": "EnesKaydi"
+      &quot;assignee&quot;: &quot;batukizmazoglu&quot;,
+      &quot;author&quot;: &quot;EnesKaydi&quot;
     },
     {
-      "assignee": "batukizmazoglu",
-      "author": "SemihDemir13"
+      &quot;assignee&quot;: &quot;batukizmazoglu&quot;,
+      &quot;author&quot;: &quot;SemihDemir13&quot;
     }
   ],
-  "lastFilter": {
-    "assignee": "batukizmazoglu",
-    "author": "SemihDemir13"
+  &quot;lastFilter&quot;: {
+    &quot;assignee&quot;: &quot;batukizmazoglu&quot;,
+    &quot;author&quot;: &quot;SemihDemir13&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/batukizmazoglu/SesAnalizi.git&quot;,
@@ -58,26 +59,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.SpeechWordCounter_ENES.executor&quot;: &quot;Run&quot;,
-    &quot;Python.Template.executor&quot;: &quot;Run&quot;,
-    &quot;Python.components.executor&quot;: &quot;Run&quot;,
-    &quot;Python.data_processing.executor&quot;: &quot;Run&quot;,
-    &quot;Python.histogram.executor&quot;: &quot;Run&quot;,
-    &quot;Python.histogram_tab.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main2.executor&quot;: &quot;Debug&quot;,
-    &quot;Python.speaker_recognition_tab.executor&quot;: &quot;Run&quot;,
-    &quot;Python.speaker_tab.executor&quot;: &quot;Run&quot;,
-    &quot;Python.topic_tab.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.SpeechWordCounter_ENES.executor": "Run",
+    "Python.Template.executor": "Run",
+    "Python.components.executor": "Run",
+    "Python.data_processing.executor": "Run",
+    "Python.emotion_tab.executor": "Run",
+    "Python.histogram.executor": "Run",
+    "Python.histogram_tab.executor": "Run",
+    "Python.main.executor": "Debug",
+    "Python.main2.executor": "Debug",
+    "Python.speaker_recognition_tab.executor": "Debug",
+    "Python.speaker_tab.executor": "Run",
+    "Python.speech_tab.executor": "Run",
+    "Python.topic_tab.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\user\PycharmProjects\SesAnalizi" />
