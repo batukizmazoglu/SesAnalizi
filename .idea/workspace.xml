@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f8d2265-e5fe-440c-9622-3278bd4c5aeb" name="Changes" comment="Commit">
+      <change beforePath="$PROJECT_DIR$/.idea/SesAnalizi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SesAnalizi.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tabs/speaker_recognition_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/tabs/speaker_recognition_tab.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tabs/speech_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/tabs/speech_tab.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,15 +35,11 @@
     {
       &quot;assignee&quot;: &quot;batukizmazoglu&quot;,
       &quot;author&quot;: &quot;EnesKaydi&quot;
-    },
-    {
-      &quot;assignee&quot;: &quot;batukizmazoglu&quot;,
-      &quot;author&quot;: &quot;SemihDemir13&quot;
     }
   ],
   &quot;lastFilter&quot;: {
     &quot;assignee&quot;: &quot;batukizmazoglu&quot;,
-    &quot;author&quot;: &quot;SemihDemir13&quot;
+    &quot;author&quot;: &quot;EnesKaydi&quot;
   }
 }</component>
   <component name="GithubPullRequestsUISettings">{
@@ -65,14 +63,12 @@
     "Python.Template.executor": "Run",
     "Python.components.executor": "Run",
     "Python.data_processing.executor": "Run",
-    "Python.emotion_tab.executor": "Run",
     "Python.histogram.executor": "Run",
     "Python.histogram_tab.executor": "Run",
-    "Python.main.executor": "Debug",
+    "Python.main.executor": "Run",
     "Python.main2.executor": "Debug",
-    "Python.speaker_recognition_tab.executor": "Debug",
+    "Python.speaker_recognition_tab.executor": "Run",
     "Python.speaker_tab.executor": "Run",
-    "Python.speech_tab.executor": "Run",
     "Python.topic_tab.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -142,23 +138,7 @@
       <option name="project" value="LOCAL" />
       <updated>1732040827786</updated>
     </task>
-    <task id="LOCAL-00006" summary="Commit">
-      <option name="closed" value="true" />
-      <created>1732120232620</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1732120232620</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Commit">
-      <option name="closed" value="true" />
-      <created>1732142288915</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1732142288915</updated>
-    </task>
-    <option name="localTasksCounter" value="8" />
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

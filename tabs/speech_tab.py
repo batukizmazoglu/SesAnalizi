@@ -80,11 +80,49 @@ class SpeechTab(QWidget):
         layout.addWidget(self.word_count_label)
 
         # Başlat ve Durdur Düğmeleri
-        self.start_button = QPushButton("Ses Tanımayı Başlat")
+        self.start_button = QPushButton("Başlat")
+        self.start_button.setStyleSheet("""
+            QPushButton {
+                background-color: #A5D6A7;  /* Açık yeşil */
+                color: white;  /* Yazı rengi beyaz */
+                border: none;
+                border-radius: 5px;
+                padding: 8px 16px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #81C784;  /* Hafif koyulaşan yeşil hover rengi */
+            }
+            QPushButton:pressed {
+                background-color: #66BB6A;  /* Daha koyu yeşil pressed rengi */
+            }
+            QPushButton:disabled {
+                background-color: #BDBDBD;
+            }
+        """)
         self.start_button.clicked.connect(self.start_recognition)
         layout.addWidget(self.start_button)
 
-        self.stop_button = QPushButton("Ses Tanımayı Durdur")
+        self.stop_button = QPushButton("Durdur")
+        self.stop_button.setStyleSheet("""
+            QPushButton {
+                background-color: #A5D6A7;  /* Açık yeşil */
+                color: white;  /* Yazı rengi beyaz */
+                border: none;
+                border-radius: 5px;
+                padding: 8px 16px;
+                font-weight: bold;
+            }
+            QPushButton:hover {
+                background-color: #81C784;  /* Hafif koyulaşan yeşil hover rengi */
+            }
+            QPushButton:pressed {
+                background-color: #66BB6A;  /* Daha koyu yeşil pressed rengi */
+            }
+            QPushButton:disabled {
+                background-color: #BDBDBD;
+            }
+        """)
         self.stop_button.clicked.connect(self.stop_recognition)
         self.stop_button.setEnabled(False)
         layout.addWidget(self.stop_button)
