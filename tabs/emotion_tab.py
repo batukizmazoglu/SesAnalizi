@@ -1,11 +1,9 @@
 from transformers import pipeline
 import speech_recognition as sr
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QTextEdit, QPushButton
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QTextEdit, QPushButton, QApplication, QMainWindow
 from PyQt5.QtCore import Qt
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-import numpy as np
-
 
 class EmotionTab(QWidget):
     def __init__(self):
@@ -65,36 +63,38 @@ class EmotionTab(QWidget):
         # Kullanıcıdan metni al
         text = self.text_edit.toPlainText()
 
-        # Hugging Face ile duygu analizi yap
         try:
+            # Hugging Face ile duygu analizi yap
             result = self.sentiment_analysis(text)
-            sentiment = result[0]  # İlk tahmin sonucu
-            label = sentiment['label']
-            score = sentiment['score']
+
+            # Birden fazla duygu tahmini yapılabilir, bu nedenle tüm sonuçları değerlendiriyoruz
+            scores = {"POSITIVE": 0, "NEGATIVE": 0, "NEUTRAL": 0}
+
+            for sentiment in result:
+                label = sentiment['label']
+                score = sentiment['score']
+                if label == "POSITIVE":
+                    scores["POSITIVE"] += score
+                elif label == "NEGATIVE":
+                    scores["NEGATIVE"] += score
+
+            # Nötr skoru belirleme
+            scores["NEUTRAL"] = max(0, 1 - scores["POSITIVE"] - scores["NEGATIVE"])
 
             # Sonuçları yazdır
-            sentiment_text = f"Sonuç: {label} ({score:.2f})"
+            sentiment_text = f"Sonuçlar: POSITIVE ({scores['POSITIVE']:.2f}), NEGATIVE ({scores['NEGATIVE']:.2f}), NEUTRAL ({scores['NEUTRAL']:.2f})"
             self.result_label.setText(sentiment_text)
 
             # Sonuçları görselleştirme
-            self.plot_sentiment(label, score)
+            self.plot_sentiment(scores)
 
         except Exception as e:
             self.result_label.setText(f"Hata: {str(e)}")
 
-    def plot_sentiment(self, label, score):
-        # Sonuçları normalize etmek için
-        scores = {"POSITIVE": 0, "NEGATIVE": 0, "NEUTRAL": 0}
-        scores[label] = score
-
-        # Renkler: NEGATIVE için kırmızı, diğerleri için normal
-        if label == "NEGATIVE":
-            colors = ['red', 'green', 'gray']
-        else:
-            colors = ['green', 'red', 'gray']
-
+    def plot_sentiment(self, scores):
         # Bar grafiği oluştur
         self.ax.clear()
+        colors = ['green', 'red', 'gray']
         self.ax.bar(scores.keys(), scores.values(), color=colors)
 
         # Başlık ve etiketler
@@ -105,11 +105,8 @@ class EmotionTab(QWidget):
         # Grafiği güncelle
         self.canvas.draw()
 
-
 # PyQt5 uygulaması başlatma
 if __name__ == '__main__':
-    from PyQt5.QtWidgets import QApplication, QMainWindow
-
     app = QApplication([])
     main_window = QMainWindow()
     tab = EmotionTab()
@@ -117,4 +114,3 @@ if __name__ == '__main__':
     main_window.setWindowTitle("Duygu Analizi Uygulaması")
     main_window.show()
     app.exec_()
-# deneme

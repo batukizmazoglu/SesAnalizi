@@ -3,22 +3,25 @@ import os
 import librosa
 import numpy as np
 import sounddevice as sd
-import wave
+import soundfile as sf
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QTabWidget, QLabel, QPushButton, QTextEdit
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.metrics import confusion_matrix, classification_report
 from PyQt5.QtCore import Qt
-import os
+from sklearn.pipeline import Pipeline
+import joblib
 
+# Dataset path
 dataset_path = 'C:\\Users\\user\\PycharmProjects\\SesAnalizi\\ses_kayitlari'
-
 
 class SpeakerRecognitionTab(QWidget):
     def __init__(self):
         super().__init__()
+        self.model = None  # Initially no model loaded
+        self.label_encoder = None
         self.init_ui()
-        self.model = RandomForestClassifier()  # Modeli başlatıyoruz
 
     def init_ui(self):
         layout = QVBoxLayout()
@@ -45,10 +48,38 @@ class SpeakerRecognitionTab(QWidget):
 
         self.setLayout(layout)
 
+    def preprocess_audio(self, audio, sr):
+        # Ses işleme: preemphasis, normalizasyon ve sessizlik kesme
+        audio = librosa.effects.preemphasis(audio)
+        audio = librosa.util.normalize(audio)
+        audio, _ = librosa.effects.trim(audio, top_db=20)
+        return audio
+
+    def extract_features(self, audio, sr):
+        # Normalize audio
+        audio = librosa.util.normalize(audio)
+
+        # Extract MFCC features
+        mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=20)
+        mfcc_mean = np.mean(mfcc.T, axis=0)
+
+        # Extract delta and delta-delta features with reduced width
+        delta_mfcc = librosa.feature.delta(mfcc, width=5)
+        delta2_mfcc = librosa.feature.delta(mfcc, order=2, width=5)
+
+        # Combine all features
+        features = np.hstack([
+            mfcc_mean,
+            np.mean(delta_mfcc.T, axis=0),
+            np.mean(delta2_mfcc.T, axis=0)
+        ])
+        return features
+
     def prepare_training_data(self):
         X = []
         y = []
-        speaker_labels = {'Kisi1': 0, 'Kisi2': 1}  # Konuşmacı etiketleri
+        # İki konuşmacı için etiketler
+        speaker_labels = {'Kisi1': 0, 'Kisi2': 1}
 
         for speaker, label in speaker_labels.items():
             speaker_folder = os.path.join(dataset_path, speaker)
@@ -57,76 +88,179 @@ class SpeakerRecognitionTab(QWidget):
                     if file.endswith('.wav'):
                         file_path = os.path.join(speaker_folder, file)
                         try:
-                            # Ses dosyasını yükleyin ve MFCC özelliklerini çıkarın
-                            audio, sr = librosa.load(file_path, sr=None, mono=True)
-                            mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)  # MFCC'yi daha tutarlı çıkaralım
-                            mfcc = np.mean(mfcc.T, axis=0)  # MFCC'yi ortalama alarak sabitleyin
-
-                            X.append(mfcc)
+                            audio, sr = librosa.load(file_path, sr=16000, mono=True)
+                            audio = self.preprocess_audio(audio, sr)
+                            # Trim sonrası kontrol: 2 saniyeden azsa atla
+                            if len(audio) < sr * 2:
+                                self.result_area.append(f"Ses dosyası çok kısa: {file_path}")
+                                continue
+                            features = self.extract_features(audio, sr)
+                            X.append(features)
                             y.append(label)
                         except Exception as e:
-                            print(f"Hata: {file_path} dosyasında problem oluştu - {e}")
+                            self.result_area.append(f"Error processing {file_path}: {e}")
             else:
-                print(f"{speaker_folder} dizini bulunamadı!")
+                self.result_area.append(f"Directory not found: {speaker_folder}")
 
-        return np.array(X), np.array(y)
+        X = np.array(X)
+        y = np.array(y)
+
+        if X.size == 0:
+            raise ValueError("No features extracted. Check your audio files and feature extraction process.")
+
+        # Eğitim ve test setine ayırma
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.2, random_state=42, stratify=y
+        )
+        return X_train, X_test, y_train, y_test
 
     def train_model(self):
         try:
-            X_train, y_train = self.prepare_training_data()
+            self.result_area.setText("Veri seti hazırlanıyor...")
+            X_train, X_test, y_train, y_test = self.prepare_training_data()
+            self.result_area.append(f"Veri seti hazırlandı. Eğitim örnek sayısı: {len(X_train)}, Test örnek sayısı: {len(X_test)}")
 
-            # Modeli oluşturun ve eğitin
-            self.model.fit(X_train, y_train)
+            # Model pipeline tanımlama
+            pipeline = Pipeline([
+                ('scaler', StandardScaler()),  # Özellik ölçeklendirme
+                ('classifier', RandomForestClassifier(n_estimators=100, class_weight='balanced', random_state=42))  # Sınıflandırıcı
+            ])
 
-            # Sonuçları gösterme
-            self.result_area.setText("Model eğitildi başarıyla!")
+            self.result_area.append("Model eğitiliyor...")
 
-        except FileNotFoundError as e:
-            self.result_area.setText(str(e))
+            # Hiperparametre optimizasyonu
+            param_grid = {
+                'classifier__n_estimators': [100, 200, 300],
+                'classifier__max_depth': [None, 10, 20],
+                'classifier__min_samples_split': [2, 5, 10]
+            }
+
+            grid_search = GridSearchCV(pipeline, param_grid, cv=2, n_jobs=-1, verbose=1)
+            grid_search.fit(X_train, y_train)
+
+            self.model = grid_search.best_estimator_
+            self.label_encoder = LabelEncoder()
+            self.label_encoder.fit(['Kisi1', 'Kisi2'])
+
+            # Sonuçları göster
+            self.result_area.append(f"Model eğitildi. En iyi parametreler: {grid_search.best_params_}")
+            self.evaluate_model(X_test, y_test)
+            self.save_model()
+
         except Exception as e:
-            self.result_area.setText(f"Beklenmedik bir hata oluştu: {e}")
+            self.result_area.setText(f"Beklenmeyen hata: {e}")
+
+    def evaluate_model(self, X_test, y_test):
+        if self.model:
+            predictions = self.model.predict(X_test)
+            cm = confusion_matrix(y_test, predictions)
+            report = classification_report(
+                y_test, predictions, target_names=['Kisi1', 'Kisi2'], labels=[0, 1]
+            )
+            self.result_area.append(f"\nConfusion Matrix:\n{cm}\n\nClassification Report:\n{report}")
+        else:
+            self.result_area.append("Model henüz eğitilmedi.")
+
+    def save_model(self):
+        try:
+            model_path = os.path.join(dataset_path, 'speaker_recognition_model.pkl')
+            le_path = os.path.join(dataset_path, 'label_encoder.pkl')
+            joblib.dump(self.model, model_path)
+            joblib.dump(self.label_encoder, le_path)
+            self.result_area.append(f"Model ve Etiket Kodlayıcı kaydedildi: {model_path}, {le_path}")
+        except Exception as e:
+            self.result_area.append(f"Model kaydetme hatası: {e}")
+
+    def load_model(self):
+        try:
+            model_path = os.path.join(dataset_path, 'speaker_recognition_model.pkl')
+            le_path = os.path.join(dataset_path, 'label_encoder.pkl')
+            if os.path.exists(model_path) and os.path.exists(le_path):
+                self.model = joblib.load(model_path)
+                self.label_encoder = joblib.load(le_path)
+                self.result_area.append(f"Model ve Etiket Kodlayıcı yüklendi: {model_path}, {le_path}")
+            else:
+                self.result_area.append("Model veya Etiket Kodlayıcı bulunamadı. Lütfen modeli eğitin.")
+        except Exception as e:
+            self.result_area.append(f"Model yükleme hatası: {e}")
 
     def record_and_predict(self):
-        # Ses kaydetme işlemi
-        fs = 16000  # Ses örnekleme frekansı
-        duration = 3  # Kayıt süresi (3 saniye)
-        self.result_area.setText("Ses kaydediliyor...")
+        try:
+            # Modelin yüklü olup olmadığını kontrol et
+            if not self.model:
+                self.load_model()
+                if not self.model:
+                    self.result_area.setText("Model yüklenemedi veya eğitilmedi.")
+                    return
 
-        # Kaydı başlat
-        audio_data = sd.rec(int(duration * fs), samplerate=fs, channels=1, dtype='float32')
-        sd.wait()  # Kayıt bitene kadar bekle
+            # Kaydetme parametreleri
+            fs = 16000  # Örnekleme hızı
+            duration = 3  # Saniye
+            self.result_area.append("Ses kaydediliyor...")
 
-        # Ses kaydını dosyaya kaydet
-        self.save_audio(audio_data, fs, "test_recording.wav")
+            # Ses kaydetme
+            audio_data = sd.rec(int(duration * fs), samplerate=fs, channels=1, dtype='float32')
+            sd.wait()
+            self.result_area.append("Ses kaydedildi.")
 
-        # Ses kaydını yükleyip tahmin etme
-        predicted_speaker = self.predict_speaker_from_file("test_recording.wav")
+            # Ses verisini işleme
+            audio_data = audio_data.flatten()
+            audio_data = self.preprocess_audio(audio_data, fs)
 
-        # Sonucu kullanıcıya göster
-        self.result_area.setText(f"Konuşmacı Tahmini: {predicted_speaker}")
+            # Trim sonrası kontrol
+            if len(audio_data) < fs * 2:
+                self.result_area.append("Kaydedilen ses çok kısa. Lütfen daha uzun konuşun.")
+                return
+
+            features = self.extract_features(audio_data, fs)
+            self.result_area.append(f"Çıkarılan Özellikler: {features}")
+
+            # Tahmin yapma
+            features = features.reshape(1, -1)  # Tahmin için şekillendirme
+            prediction = self.model.predict(features)
+            predicted_label = prediction[0]
+
+            # Etiketi geri dönüştürme
+            speaker = self.label_encoder.inverse_transform([predicted_label])[0]
+            self.result_area.append(f"Tahmin edilen konuşmacı: {speaker}")
+
+        except Exception as e:
+            self.result_area.setText(f"Tahmin hatası: {str(e)}")
 
     def save_audio(self, audio_data, fs, filename):
-        # Kayıt edilen ses verisini dosyaya kaydetme
-        with wave.open(filename, 'wb') as wf:
-            wf.setnchannels(1)
-            wf.setsampwidth(2)
-            wf.setframerate(fs)
-            wf.writeframes(audio_data.tobytes())
+        try:
+            # Normalize audio data
+            audio_data = librosa.util.normalize(audio_data)
+
+            # Save as WAV file
+            sf.write(filename, audio_data, fs)
+            self.result_area.append(f"Ses dosyası kaydedildi: {filename}")
+            return True
+        except Exception as e:
+            self.result_area.append(f"Ses kayıt hatası: {str(e)}")
+            return False
 
     def predict_speaker_from_file(self, audio_file):
-        # Kaydedilen ses dosyasından özellik çıkarma ve tahmin yapma
         try:
-            audio, sr = librosa.load(audio_file, sr=None, mono=True)
-            mfcc = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)  # MFCC özelliklerini çıkar
-            mfcc = np.mean(mfcc.T, axis=0)  # Özellik çıkarımı
+            # Load audio with same parameters as training
+            audio, sr = librosa.load(audio_file, sr=16000, mono=True)
 
-            # Tahmin yap
-            predicted_speaker = self.model.predict([mfcc])
-            return "Kisi1" if predicted_speaker[0] == 0 else "Kisi2"
+            # Extract features exactly like in training
+            audio = self.preprocess_audio(audio, sr)
+            features = self.extract_features(audio, sr)
+
+            # Make prediction
+            if self.model:
+                features = features.reshape(1, -1)  # Reshape for prediction
+                prediction = self.model.predict(features)
+                speaker = self.label_encoder.inverse_transform(prediction)[0]
+                return speaker
+            else:
+                return "Model not trained yet."
+
         except Exception as e:
-            self.result_area.setText(f"Hata: {e}")
+            print(f"Prediction error: {e}")
             return "Hata"
-
 
 class VoiceAnalysisApp(QMainWindow):
     def __init__(self):
@@ -157,7 +291,6 @@ class VoiceAnalysisApp(QMainWindow):
 
         # Tüm tabları ekleme
         tabs.addTab(SpeakerRecognitionTab(), "👤 Konuşmacı Tanıma")
-
 
 # Ana fonksiyon
 def main():

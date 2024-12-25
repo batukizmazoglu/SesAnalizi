@@ -5,7 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9f8d2265-e5fe-440c-9622-3278bd4c5aeb" name="Changes" comment="Commit">
+      <change beforePath="$PROJECT_DIR$/.idea/SesAnalizi.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SesAnalizi.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tabs/emotion_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/tabs/emotion_tab.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tabs/speaker_recognition_tab.py" beforeDir="false" afterPath="$PROJECT_DIR$/tabs/speaker_recognition_tab.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,7 +71,7 @@
     "Python.emotion_tab.executor": "Run",
     "Python.histogram.executor": "Run",
     "Python.histogram_tab.executor": "Run",
-    "Python.main.executor": "Debug",
+    "Python.main.executor": "Run",
     "Python.main2.executor": "Debug",
     "Python.speaker_recognition_tab.executor": "Debug",
     "Python.speaker_tab.executor": "Run",
@@ -78,6 +81,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/user/PycharmProjects/SesAnalizi",
     "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
@@ -158,7 +162,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732142288915</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Commit">
+      <option name="closed" value="true" />
+      <created>1732634420348</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1732634420348</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
