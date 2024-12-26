@@ -91,7 +91,11 @@ class VoiceAnalysisApp(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
-
+    
+    # Font ayarları
+    font = QFont('Arial')  # Segoe UI yerine Arial kullan
+    app.setFont(font)
+    
     # Stil dosyası oluşturma
     style = """
         QMainWindow {
