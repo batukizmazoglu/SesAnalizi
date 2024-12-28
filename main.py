@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QTa
 from PyQt5.QtGui import QFont, QPalette, QColor
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QStyleFactory
-
 from tabs.emotion_tab import EmotionTab
 from tabs.speech_tab import SpeechTab
 from tabs.topic_tab import TopicTab
@@ -92,7 +91,11 @@ class VoiceAnalysisApp(QMainWindow):
 
 def main():
     app = QApplication(sys.argv)
-
+    
+    # Font ayarları
+    font = QFont('Arial')  # Segoe UI yerine Arial kullan
+    app.setFont(font)
+    
     # Stil dosyası oluşturma
     style = """
         QMainWindow {
